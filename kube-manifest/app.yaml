@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacy-app-deployment
+  namespace: default
+  labels:
+    app.kubernetes.io/managed-by: pulumi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legacy-app
+  template:
+    metadata:
+      labels:
+        app: legacy-app
+    spec:
+      containers:
+        - name: legacy-app
+          image: docker.io/gofrendi/sample-app
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 100m 
+              memory: 100M
+            requests:
+              cpu: 100m 
+              memory: 100M
+          env:
+            - name: APP_HTTP_PORT
+              value: '80'
+            - name: APP_RESPONSE
+              value: 'Legacy Everywhere 😥'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legacy-app-service
+  namespace: default
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: legacy-app
+  type: LoadBalancer
