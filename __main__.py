@@ -1,12 +1,9 @@
 import pulumi
-from ekscluster import cluster
-from app import deployment, service
-from legacyapp import legacy_app
-from kubedashboard import kube_dashboard
+import pulumi_eks as eks
 
-# Export the URL for the load balanced service.
-pulumi.export('url', service.status.load_balancer.ingress[0].hostname)
+# Create an EKS cluster with the default configuration.
+cluster = eks.Cluster('my-cluster')
 
-# Export the cluster's kubeconfig.
 pulumi.export('cluster-name', cluster.name)
+# Export the cluster's kubeconfig.
 pulumi.export('kubeconfig', cluster.kubeconfig)
