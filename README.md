@@ -75,6 +75,12 @@ pulumi stack output kubeconfig
 
 you should get a kubeconfig. You can add it to `~/.kube/config` if you want to manage/explore your EKS cluster using kubectl.
 
+Or you can also do this:
+
+```bash
+aws eks --region "$(pulumi config get aws:region)" update-kubeconfig --name "$(pulumi stack output cluster-name)"
+```
+
 # Deploy Simple Nginx App
 
 For the sake of code separability let's move your cluster definition to `ekscluster.py`:
@@ -339,3 +345,7 @@ pulumi destroy
 # Not hating yourself
 
 You are awesome, you have survive for so long and you will survive longer!!! 🎉🎉🎉
+
+Also, you should hate YAML more than you hate yourself wkwkwkwkw
+
+![I hate yaml](i-hate-yaml.jpg)

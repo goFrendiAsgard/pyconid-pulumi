@@ -1,10 +1,22 @@
 import pulumi
-import pulumi_kubernetes as k8s
+from pulumi_kubernetes.helm.v3 import Chart, ChartOpts, LocalChartOpts, FetchOpts
 from ekscluster import cluster
 
-kube_dashboard = k8s.helm.v3.Chart(
+# wordpress = Chart(
+#     "wpdev",
+#     ChartOpts(
+#         chart="wordpress",
+#         version="9.6.0",
+#         fetch_opts=FetchOpts(
+#             repo="https://charts.bitnami.com/bitnami",
+#         ),
+#     ),
+#     opts=pulumi.ResourceOptions(provider=cluster.provider),
+# )
+
+kube_dashboard = Chart(
     'kube-dashboard', 
-    config=k8s.helm.v3.LocalChartOpts(
+    config=LocalChartOpts(
         path='./kubernetes-dashboard',
         namespace= 'default',
         values={

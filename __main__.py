@@ -8,4 +8,5 @@ from kubedashboard import kube_dashboard
 pulumi.export('url', service.status.load_balancer.ingress[0].hostname)
 
 # Export the cluster's kubeconfig.
+pulumi.export('cluster-name', cluster.name)
 pulumi.export('kubeconfig', cluster.kubeconfig)
